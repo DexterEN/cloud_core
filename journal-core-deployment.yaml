@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: journal-core
+  labels:
+    app: journal-core
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: journal-core
+  template:
+    metadata:
+      labels:
+        app: journal-core
+    spec:
+      containers:
+        - name: backend-app # Container name
+          image: journallab-core-app:latest # Docker image name
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081 # Expose port 8081 from the container
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://journallab2-db:3306/journaldb
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "1234"
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+            - name: SPRING_JPA_SHOW_SQL
+              value: "true"
+
+      

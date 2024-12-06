@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: journallab2-db
+spec:
+  selector:
+    app: journallab2-db
+  ports:
+    - protocol: TCP
+      port: 3306         # Service port for MySQL
+      targetPort: 3306   # Target port in the container
+  type: ClusterIP
+
+  

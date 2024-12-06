@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: journal-core
+spec:
+  selector:
+    app: journal-core
+  ports:
+    - protocol: TCP
+      port: 8081         # Service port
+      targetPort: 8081   # Target port in the container
+  type: ClusterIP

@@ -7,6 +7,6 @@ spec:
     app: journal-core
   ports:
     - protocol: TCP
-      port: 8081         # Service port
+      port: 8082         # Service port
       targetPort: 8081   # Target port in the container
   type: ClusterIP

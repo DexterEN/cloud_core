@@ -20,18 +20,18 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers("/api/healthz").permitAll()  // Allow unauthenticated access to healthz
                                 .requestMatchers("/api/**").authenticated()  // Protect other APIs
-                );
-                /**.oauth2ResourceServer(oauth2 -> oauth2
+                )
+                .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.decoder(jwtDecoder()))  // Use .decoder() directly instead of .jwt()
                 );
-                 **/
+
 
         return http.build();
     }
     // Configure the JWT Decoder to read and validate JWT tokens
     private JwtDecoder jwtDecoder() {
         // Provide the URL of your OAuth2 provider's issuer (e.g., Keycloak)
-        String issuerUri = "http://localhost:8080/realms/your-realm";  // TODO Update with your Keycloak issuer URI
+        String issuerUri = "https://journal-keycloak.app.cloud.cbh.kth.se/realms/journal";
 
         // Return a JwtDecoder that validates the JWT token against the issuer URI
         return JwtDecoders.fromIssuerLocation(issuerUri);
@@ -43,11 +43,6 @@ public class SecurityConfig {
                 authorizeRequests
                         .requestMatchers("/api/**").permitAll()  // Protect other APIs
         );
-        /**.oauth2ResourceServer(oauth2 -> oauth2
-         .jwt(jwt -> jwt.decoder(jwtDecoder()))  // Use .decoder() directly instead of .jwt()
-         );
-         **/
-
         return http.build();
     }
 }

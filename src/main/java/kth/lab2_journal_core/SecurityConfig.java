@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -16,7 +18,9 @@ public class SecurityConfig {
     @Bean
     @Profile("!test")
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorizeRequests ->
+
+        http.cors(WebMvcConfigurer -> corsConfigurer())
+                .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/healthz").permitAll()  // Allow unauthenticated access to healthz
                                 .requestMatchers("/api/**").authenticated()  // Protect other APIs
@@ -44,5 +48,22 @@ public class SecurityConfig {
                         .requestMatchers("/api/**").permitAll()  // Protect other APIs
         );
         return http.build();
+    }
+
+    // CORS configuration for Spring MVC (for Spring Security to apply CORS correctly)
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOriginPatterns("*://*") // Allow all origins
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow necessary methods
+                        .allowedHeaders("*") // Allow all headers
+                        .allowCredentials(true) // Allow credentials (cookies, auth headers)
+                        .maxAge(3600);  // Cache CORS response for 1 hour
+            }
+        };
     }
 }

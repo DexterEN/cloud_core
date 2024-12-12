@@ -1,6 +1,5 @@
 package kth.lab2_journal_core;
 
-import kth.lab2_journal_core.data.condition.ConditionService;
 import kth.lab2_journal_core.data.dto.CreateObservationRequest;
 import kth.lab2_journal_core.data.dto.CreatePatientRequest;
 import kth.lab2_journal_core.data.dto.CreatePractitionerRequest;
@@ -14,7 +13,6 @@ import kth.lab2_journal_core.data.patient.Patient;
 import kth.lab2_journal_core.data.patient.PatientService;
 import kth.lab2_journal_core.data.practitioner.Practitioner;
 import kth.lab2_journal_core.data.practitioner.PractitionerService;
-import kth.lab2_journal_core.data.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

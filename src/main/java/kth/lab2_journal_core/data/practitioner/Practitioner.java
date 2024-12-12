@@ -1,12 +1,10 @@
 package kth.lab2_journal_core.data.practitioner;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import kth.lab2_journal_core.data.encounter.Encounter;
 import kth.lab2_journal_core.data.organization.Organization;
 import kth.lab2_journal_core.data.role.Role;
-import kth.lab2_journal_core.data.user.User;
 
 
 import java.time.LocalDateTime;
@@ -46,16 +44,15 @@ public class Practitioner {
     @JoinColumn(name = "organization_id")
     private Organization organization;
 
-    @OneToOne
-    @JoinColumn(name = "user_email", referencedColumnName = "email") // Map by email
-    private User user;
+    @Column(nullable = true)
+    private String email;
 
-    public User getUser() {
-        return user;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setEmail(String user_email) {
+        this.email = user_email;
     }
 
     public Organization getOrganization() {

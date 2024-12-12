@@ -1,22 +1,15 @@
 package kth.lab2_journal_core;
 
-import kth.lab2_journal_core.data.dto.CreateObservationRequest;
-import kth.lab2_journal_core.data.dto.CreatePatientRequest;
-import kth.lab2_journal_core.data.dto.CreatePractitionerRequest;
 import kth.lab2_journal_core.data.encounter.EncounterService;
 import kth.lab2_journal_core.data.observation.ObservationService;
 import kth.lab2_journal_core.data.organization.OrganizationService;
 import kth.lab2_journal_core.data.patient.Patient;
 import kth.lab2_journal_core.data.patient.PatientService;
 import kth.lab2_journal_core.data.practitioner.PractitionerService;
-import kth.lab2_journal_core.data.user.User;
-import kth.lab2_journal_core.data.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -50,9 +43,6 @@ public class ControllerTest {
 
     @MockitoBean
     private OrganizationService organizationService;
-
-    @MockitoBean
-    private UserService userService;
 
 
     @Test

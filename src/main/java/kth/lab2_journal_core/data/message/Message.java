@@ -2,7 +2,6 @@ package kth.lab2_journal_core.data.message;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import kth.lab2_journal_core.data.user.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,14 +19,13 @@ public class Message {
     @Column(nullable = false)
     private LocalDateTime time;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_email", referencedColumnName = "email")
-    private User sender;
 
-    // Receiver can also be Patient or Practitioner, so use the User entity
-    @ManyToOne
-    @JoinColumn(name = "receiver_email", referencedColumnName = "email")
-    private User receiver;
+    @Column(name = "sender_email", nullable = true)
+    private String sender;
+
+
+    @Column(name = "receiver_email",nullable = true)
+    private String receiver;
 
     @ManyToOne
     @JoinColumn(name = "message_id", nullable = true)
@@ -81,24 +79,23 @@ public class Message {
         this.responses = responses;
     }
 
-    public User getSender() {
-        return sender;
-    }
-
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public User getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
-    }
-
     public String getImagePath() {return imagePath;}
 
     public void setImagePath(String imagePath) {this.imagePath = imagePath;}
 
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
 }

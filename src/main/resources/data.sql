@@ -1,16 +1,33 @@
--- Insert into t_location (assuming 'postalCode' is mapped to 'postal_code' in the database)
+-- Insert into t_location if it does not exist based on postal_code
 INSERT INTO t_location (city, address, postal_code)
-VALUES ('Stockholm City', 'Stockholm vägen 1', '116 60');
+SELECT 'Stockholm City', 'Stockholm vägen 1', '116 60'
+FROM DUAL
+WHERE NOT EXISTS (
+    SELECT 1 FROM t_location WHERE postal_code = '116 60'
+);
 
--- Insert into t_organization (assuming 'location_id' is the foreign key to t_location)
+-- Insert into t_organization if it does not exist based on name
+-- Using LAST_INSERT_ID() to refer to the recently inserted location
 INSERT INTO t_organization (name, location_id)
-VALUES ('Stockholm AB', LAST_INSERT_ID());
+SELECT 'Stockholm AB', LAST_INSERT_ID()
+FROM DUAL
+WHERE NOT EXISTS (
+    SELECT 1 FROM t_organization WHERE name = 'Stockholm AB'
+);
 
--- Insert into t_practitioner (assuming 'user_email' is the email field in t_practitioner and 'role' is an ENUM type)
+-- Insert into t_practitioner if it does not exist based on email
 INSERT INTO t_practitioner (name, date_of_birth, role, email, organization_id)
-VALUES ('test', '1980-01-01 00:00:00', 'DOCTOR', 'test@gmail.com', LAST_INSERT_ID());
+SELECT 'test', '1980-01-01 00:00:00', 'DOCTOR', 'test@gmail.com', LAST_INSERT_ID()
+FROM DUAL
+WHERE NOT EXISTS (
+    SELECT 1 FROM t_practitioner WHERE email = 'test@gmail.com'
+);
 
--- Insert into t_patient (assuming 'user_email' is the email field in t_patient)
+-- Insert into t_patient if it does not exist based on email
 INSERT INTO t_patient (gender, name, date_of_birth, email)
-VALUES ('MALE', 'patient', '2000-01-01 00:00:00', 'patient@gmail.com');
+SELECT 'MALE', 'patient', '2000-01-01 00:00:00', 'patient@gmail.com'
+FROM DUAL
+WHERE NOT EXISTS (
+    SELECT 1 FROM t_patient WHERE email = 'patient@gmail.com'
+);
 

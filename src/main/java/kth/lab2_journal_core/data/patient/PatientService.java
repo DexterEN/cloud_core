@@ -20,11 +20,11 @@ public class PatientService {
         return patientRepository.save(patient);
     }
     public Patient getPatientByEmail(String email) {
-        return patientRepository.findByUser_Email(email);
+        return patientRepository.findByEmail(email);
     }
 
     public Patient findPatientByEmail(String email) {
-        return patientRepository.findByUser_Email(email);
+        return patientRepository.findByEmail(email);
     }
 
     public List<Patient> getAllPatients() {

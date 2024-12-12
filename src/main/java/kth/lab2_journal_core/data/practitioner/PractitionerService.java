@@ -33,11 +33,11 @@ public class PractitionerService {
     }
 
     public Practitioner getPractitionerByEmail(String email) {
-        return practitionerRepository.findByUser_Email(email);
+        return practitionerRepository.findByEmail(email);
     }
 
     public Practitioner findByEmail(String email) {
-        return practitionerRepository.findByUser_Email(email);
+        return practitionerRepository.findByEmail(email);
     }
 
     @Transactional

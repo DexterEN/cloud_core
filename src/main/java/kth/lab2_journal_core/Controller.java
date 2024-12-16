@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -45,10 +48,21 @@ public class Controller {
 
     @GetMapping("/patient/get/byEmail")
     public ResponseEntity<?> getPatientByEmail(@RequestParam String email) {
-        Patient patientOpt = patientService.findPatientByEmail(email);
 
-        return new ResponseEntity<>(patientOpt, HttpStatus.OK);
+        try{
+            Patient patientOpt = patientService.findPatientByEmail(email);
+            if (patientOpt == null) {
+                // Log if patient is not found
+                System.out.println("Patient not found with email: " + email);
+                return new ResponseEntity<>("Patient not found", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(patientOpt, HttpStatus.OK);
+        }catch (HttpClientErrorException.Forbidden ex){
+            return new ResponseEntity<>("Access Denied: You do not have permission to access this resource. "+ex.getMessage(), HttpStatus.FORBIDDEN);
+        }catch (Exception ex){
+        return new ResponseEntity<>("An unexpected error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+        }
 
     @GetMapping("/patient/get/all")
     public ResponseEntity<List<Patient>> getAllPatients() {

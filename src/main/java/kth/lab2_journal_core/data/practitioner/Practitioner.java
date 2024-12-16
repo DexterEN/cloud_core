@@ -44,7 +44,7 @@ public class Practitioner {
     @JoinColumn(name = "organization_id")
     private Organization organization;
 
-    @Column(nullable = true)
+    @Column(nullable = true,unique = true)
     private String email;
 
     public String getEmail() {

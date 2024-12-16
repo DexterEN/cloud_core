@@ -29,7 +29,7 @@ public class Patient {
    @JsonIgnore
     private List<Encounter> encounters;
 
-    @Column(nullable = true)
+    @Column(nullable = true,unique = true)
     private String email;
 
     public String getEmail() {
